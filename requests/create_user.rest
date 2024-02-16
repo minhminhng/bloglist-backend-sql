@@ -1,0 +1,37 @@
+GET http://localhost:3001/api/users/
+
+###
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+{
+  "username": "nataliesis",
+  "name": "Natalie Sistonen"
+}
+
+###
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+{
+  "username": "mattfi",
+  "name": "Matt Finas"
+}
+
+###
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+{
+  "username": "nickju",
+  "name": "Nick June"
+}
+
+###
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+{
+  "username": "trizzy.hentonen@hotmail.com",
+  "name": "Trizzy Hentonen"
+}
