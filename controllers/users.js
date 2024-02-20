@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.get('/:username', async (req, res) => {
+router.get('/:username', userFinder, async (req, res) => {
   if (req.user) {
     res.json(req.user)
   } else {
