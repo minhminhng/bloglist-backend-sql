@@ -5,7 +5,7 @@ POST http://localhost:3001/api/users/
 Content-Type: application/json
 
 {
-  "username": "nataliesis",
+  "username": "natalie.sistonen@hotmail.com",
   "name": "Natalie Sistonen"
 }
 
@@ -14,7 +14,7 @@ POST http://localhost:3001/api/users/
 Content-Type: application/json
 
 {
-  "username": "mattfi",
+  "username": "matt.finas@gmail.com",
   "name": "Matt Finas"
 }
 

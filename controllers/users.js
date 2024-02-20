@@ -2,14 +2,20 @@ const router = require('express').Router()
 const { Blog, User } = require('../models')
 const { userFinder } = require('../util/middleware')
 
-router.get('/', async (req, res) => {
-  const users = await User.findAll({
-    include: {
-      model: Blog,
-      attributes: { exclude: ['userId'] }
-    }
-  })
-  res.json(users)
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      include: {
+        model: Blog,
+        attributes: { exclude: ['userId'] }
+      }
+    })
+    res.json(users)
+  }
+  catch (error) {
+    next(error)
+  }
+
 })
 
 router.post('/', async (req, res, next) => {
