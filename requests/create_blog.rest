@@ -35,3 +35,13 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hd
 }
 
 ###
+POST http://localhost:3001/api/blogs/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hdGFsaWVzaXMiLCJpZCI6MSwiaWF0IjoxNzA4MDk3MzEwfQ.DUS2VS4XryDUXqNdwXypH082JlNk2umeXuyKwcDWTBo
+
+{
+  "title": "CUPCAKES & CASHMERE",
+  "author": "Emily Schuman",
+  "url": "https://cupcakesandcashmere.com/",
+  "likes": 6
+}
