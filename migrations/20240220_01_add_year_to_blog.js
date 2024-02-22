@@ -3,13 +3,7 @@ const { DataTypes } = require('sequelize')
 module.exports = {
   up: async ({ context: queryInterface }) => {
     await queryInterface.addColumn('blogs', 'year', {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-        min: 1991,
-        max: new Date().getFullYear()
-      }
+      type: DataTypes.INTEGER
     })
   },
   down: async ({ context: queryInterface }) => {
