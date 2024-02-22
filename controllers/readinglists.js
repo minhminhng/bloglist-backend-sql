@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const { Op } = require('sequelize')
 const { Blog, User, ReadingList } = require('../models')
+
+const { tokenExtractor } = require('../util/middleware')
 
 router.post('/', async (req, res, next) => {
   try {    
@@ -22,6 +23,32 @@ router.post('/', async (req, res, next) => {
   catch (error) {
     next(error)
   }
+})
+
+router.put('/:id', tokenExtractor, async (req, res, next) => {
+  if (req.decodedToken.id) {
+    try {    
+      const readinglist = await ReadingList.findByPk(req.params.id)
+      console.log(req.decodedToken.id)
+      console.log(readinglist.userId)
+      if (readinglist && req.decodedToken.id === readinglist.userId) {
+        if (req.body.read) {
+          readinglist.read = req.body.read
+          await readinglist.save()
+          res.json(readinglist)
+        }
+      }
+      else if(!readinglist) {
+        next(new Error('Invalid reading list id'))
+      }
+      else {
+        next(new Error('Reading list does not belong to this user'))
+      }
+    } 
+    catch (error) {
+      next(error)
+    }
+  }  
 })
 
 module.exports = router
