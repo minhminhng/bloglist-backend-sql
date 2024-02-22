@@ -38,7 +38,8 @@ router.get('/:id', async (req, res, next) => {
           as: 'readings',
           attributes: ['id', 'title', 'url', 'author', 'likes', 'year'],
           through: {
-            attributes: []
+            as: 'readinglists',
+            attributes: ['read', 'id']
           }
         }
       ]

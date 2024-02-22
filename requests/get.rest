@@ -10,4 +10,4 @@ GET http://localhost:3001/api/blogs?search=me
 GET http://localhost:3001/api/authors
 
 ### Get info from user with id
-GET http://localhost:3001/api/users/3
+GET http://localhost:3001/api/users/1
