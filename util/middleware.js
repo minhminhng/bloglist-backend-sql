@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('./config')
-const { Blog, User } = require('../models')
+const { Blog, User, Token } = require('../models')
 
 const logger = require('./logger')
 
@@ -27,6 +27,10 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).json({ error: error.message })
   } else if (error.name === 'JsonWebTokenError') {
     return response.status(401).json({ error: error.message })
+  } else if (error.name === 'TokenExpiredError') {
+    return response.status(401).json({
+      error: 'token expired'
+    })
   }
 
   next(error)
@@ -42,11 +46,32 @@ const userFinder = async(req, res, next) => {
   next()
 }
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async(req, res, next) => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+      const tokenString = authorization.substring(7)
+      const token = await Token.findOne({ where: { token: tokenString } })
+      if (!token) {
+        return res.status(401).json({ error: 'invalid token' })
+      }
+      req.savedToken = token
+      
+      const decodedToken = jwt.verify(tokenString, SECRET)
+      const user = await User.findByPk(decodedToken.id)
+      const disabled = user.disabled
+      const expired = new Date() > new Date(token.expires)
+
+      if (disabled) {
+        token.destroy()        
+        return res.status(401).json({ error: 'user is disabled' })
+      }
+      else if (expired) {
+        token.destroy()   
+        return res.status(401).json({ error: 'token is expired' })
+      }
+      req.decodedToken = decodedToken
+
     } catch{
       return res.status(401).json({ error: 'token invalid' })
     }
